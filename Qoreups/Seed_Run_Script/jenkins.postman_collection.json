@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "03cd4307-4e37-433c-9520-f04632ecb642",
+		"name": "jenkins",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"email\", \"admin@gmail.com\");",
+							"pm.collectionVariables.set(\"password\", \"React@123\");",
+							"pm.collectionVariables.set(\"type\", \"byMail\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"User_id\", jsonData.data.login.id);",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.environment.set(\"tocken\", jsonData.data.login.access_token);",
+							"",
+							"function sucess(function_name)",
+							"{",
+							"    pm.test(function_name + \" Verified \", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"}",
+							"sucess(\"login\");",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "domain_name",
+						"value": "{{domain_name}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation login($email: String!, $password: String!, $type: loginType!) {\n  login(data: {email: $email, password: $password, type: $type}) {\n    status\n    Msg\n    access_token\n    id\n    role\n  }\n}\n",
+						"variables": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"type\": \"{{type}}\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{Base_URL_Demo}}",
+					"host": [
+						"{{Base_URL_Demo}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

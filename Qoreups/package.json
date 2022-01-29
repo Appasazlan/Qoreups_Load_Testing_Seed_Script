@@ -1,0 +1,11 @@
+{
+  "name": "qoreups",
+  "version": "1.0.0",
+  "description": "Qoreups Load Testing Seed Updation Script",
+  "main": "index.js",
+  "scripts": {
+    "test": "newman run Seed_Run_Script/jenkins.postman_collection.json"
+  },
+  "author": "Appas Azlan",
+  "license": "ISC"
+}
